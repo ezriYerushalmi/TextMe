@@ -30,6 +30,24 @@
     background-position: center;
 }
 
+.chat-messages-start-chat{
+    display: flex;
+    background-image: url("https://i.pinimg.com/564x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg");
+    flex-direction: column;
+    flex: 0.65;
+}
+
+.chat-messages-start-chat-sentence{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    font-weight: 300;
+    font-size: 1.3rem;
+    font-family: Ubuntu, sans-serif !important;
+
+}
+
 .chat-write-message {
     display: flex;
     flex: 0.1;

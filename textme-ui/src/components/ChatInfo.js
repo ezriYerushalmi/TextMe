@@ -1,26 +1,23 @@
 import React from "react";
-import { Avatar, Image } from "antd";
 import "./ChatInfo.css";
+import UserAvatar from "./UserAvatar";
 
-function ChatInfo(props) {
-  return (
-    <div className="chat-details">
-      <Avatar
-        shape="circle"
-        size={48}
-        src={
-          <Image
-            src="https://avatars.dicebear.com/api/male/john.svg?background=%230000ff"
-            style={{ width: 48 }}
-          />
-        }
-      />
-      <div className="sidebar-info">
-        <h2> {props.name ? props.name : <span>Unknown User</span>}</h2>
-        <p> last Message ...</p>
-      </div>
-    </div>
-  );
+function ChatInfo({ chat, chatDetails, customOnClick, withSecondHeader = true ,selectedChat = false}) {
+    let lastMessage = '';
+    if(withSecondHeader) {
+        const {messages} = chat;
+        lastMessage = messages && messages.length > 0 ?  messages[messages.length -1].text : 'Start New chat :)'
+    }
+
+    return (
+        <div className={`chat-details-general ${withSecondHeader && "chat-details"} ${selectedChat?.chat?.id === chat?.id && "chat-details-selected"}`} onClick={customOnClick}>
+            <UserAvatar size={32}  url={chatDetails.imageUrl}/>
+            <div className="sidebar-info">
+                <h2> {chatDetails.name ? chatDetails.name : <span>Unknown User</span>}</h2>
+                <p> {withSecondHeader && lastMessage}</p>
+            </div>
+        </div>
+    );
 }
 
 export default ChatInfo;

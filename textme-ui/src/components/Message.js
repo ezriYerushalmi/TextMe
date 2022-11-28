@@ -1,13 +1,15 @@
 import React from 'react';
 import './Message.css'
+import TimeStamp from "./TimeStamp";
 
-const Message = (props) => {
+const Message = ({writer, message, isCurrentUser}) => {
+    const name = isCurrentUser ? 'Me' : `${writer.name} ${writer.lastName}`;
     return (
         <div className="message">
-            <p className={`chat-msg ${ props.receiver && "chat-receiver "}`}>
-                <span className="chat-writer-name"> Ezri Yerushalmi</span>
-                <span>{props.text}</span>
-                <span className="chat-msg-timestamp">3:52 pm</span>
+            <p className={`chat-msg ${isCurrentUser && "chat-receiver "}`}>
+                <span className="chat-writer-name"> {name}</span>
+                {message.text && <span>{message.text}</span>}
+                <TimeStamp timeStampString={message.sendDate}></TimeStamp>
             </p>
         </div>
     );

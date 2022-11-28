@@ -1,25 +1,44 @@
-const { usersList } = require("../Data/fakeUsers");
-const {find} = require("lodash");
-
+require('dotenv').config();
+const {logger} = require("../logger");
+const {UserInputError} = require("apollo-server");
+const {
+    getUsers,
+    getUserById,
+    searchUser,
+    createUser,
+    getUserLandPage,
+    updateMsg
+} = require(`../modules/${process.env.STORE_TYPE}/queries`);
 const resolvers = {
-  Query: {
-    users: () => {
-      return usersList;
+    Query: {
+        users:  () => {
+            return getUsers();
+        },
+        user:  (_, args) => {
+            const {id} = args;
+            return  getUserById(id);
+        },
+        searchUser:  (_, args) => {
+            const {freeText} = args;
+            return searchUser(freeText);
+        },
+        getUserLandPage: (_, args) => {
+            const {userId} = args;
+            return getUserLandPage(userId);
+        }
     },
-    user: (_, args) => {
-      const { id } = args;
-      return find(usersList, {id});
-    },
-  },
 
-  Mutation: {
-    createUser: (parent, args) => {
-      const userInput = args.input;
-      console.log(userInput);
-      return usersList[0];
-    }
-  }
+    Mutation: {
+        createUser: async (parent, args) => {
+            const {input} = args;
+            return createUser(input);
+        },
+        updateMsg: async (parent, args) => {
+            const {input} = args;
+            logger.info('updateMsg', JSON.stringify(input));
+            return updateMsg(input);
+        }
+    },
 };
-
 
 module.exports = {resolvers};

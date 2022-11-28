@@ -1,28 +1,27 @@
-/*import { ApolloProvider, ApolloClient, InMemoryCache, useQuery } from "@apollo/client";
-import FriendsList from "./components/FriendsList";*/
-import "./App.css";
-import Sidebar from "./components/Sidebar";
-import ChatMessages from "./components/ChatMessages";
+import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
 
 
+import TextMe from "./components/TextMe";
 
 
 function App() {
-  /*  const client = new ApolloClient({
-    cache: new InMemoryCache(),
-    uri: "http://localhost:4080/grpahql",
-  });*/
+    const client = new ApolloClient({
+        cache: new InMemoryCache(),
+        uri: "http://localhost:4080/grpahql",
+    });
 
-  return (
-    /* <ApolloProvider client={client}>*/
-    <div className="app">
-      <div className="app-body">
-        <Sidebar />
-        <ChatMessages></ChatMessages>
-      </div>
-    </div>
-    /* </ApolloProvider>*/
-  );
+
+
+    return (
+        <ApolloProvider client={client}>
+            <Router>
+                <Routes>
+                    <Route path='/users' element={<TextMe/>}/>
+                </Routes>
+            </Router>
+        </ApolloProvider>
+    );
 }
 
 export default App;
