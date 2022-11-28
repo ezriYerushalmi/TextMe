@@ -1,0 +1,70 @@
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    flex: 0.65;
+}
+
+.chat-header {
+    display: flex;
+    padding: 2px;
+    flex: 0.09;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+}
+
+.chat-header-info {
+    flex: 1;
+    margin-left: 20px;
+}
+
+
+.chat-messages-body {
+    display: flex;
+    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+    overflow: scroll;
+    flex-direction: column;
+    padding: 30px;
+    flex: 0.81;
+    background-repeat: repeat;
+    background-position: center;
+}
+
+.chat-write-message {
+    display: flex;
+    flex: 0.1;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    border-top: 1px solid lightgray;
+}
+
+
+.chat-write-message > form {
+    flex: 1;
+    display: flex;
+}
+
+.chat-write-message > form > input {
+    flex: 1;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
+}
+
+.chat-write-message > form > button {
+
+    border: none;
+}
+
+
+.chat-header-info > h3 {
+    margin-bottom: 3px;
+    font-weight: 500;
+}
+
+.chat-header-info > p {
+    color: grey;
+}
+
+
