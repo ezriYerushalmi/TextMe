@@ -8,7 +8,6 @@ const {User} = require("./Classes/User");
 const {find} = require("lodash");
 const {UserInputError} = require("apollo-server");
 const {removeItemFromArray} = require("../../Utiles");
-const {logger} = require("../../logger");
 const {Message} = require("./Classes/Message");
 
 
@@ -60,7 +59,7 @@ function getUserLandPage(userId) {
     });
     const uniqueContactIds = [...new Set(contactIds.flat())];
     const uniqueContactIdsWithoutUser = removeItemFromArray(uniqueContactIds, userId)
-    const contacts = uniqueContactIds.map((uId) => usersList.find(usr => usr.id === uId));
+    const contacts = uniqueContactIdsWithoutUser.map((uId) => usersList.find(usr => usr.id === uId));
     const user = usersList.find(usr => usr.id === userId)
     return Promise.resolve({user, contacts, chats})
 }
