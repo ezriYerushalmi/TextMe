@@ -6,16 +6,22 @@ import UserAvatar from "./UserAvatar";
 import {useMutation} from "@apollo/client";
 import {MUTATION_UPDATE_MESSAGE} from "../gql/queries/users";
 
-const ChatMessages = ({user, chatData}) => {
+const ChatMessages = ({user, selectedChatId}) => {
+
+
+    const [messages, setMessages] = useState(null);
+    const [chatData, setChatData] = useState(null);
+    const [participantsMap, setParticipantsMap] = useState(new Map());
+    const [msg, setMsg] = useState("");
+
     const {
         chatHeader,
         chat,
         chatContacts
     } = chatData;
 
-    const [messages, setMessages] = useState(null);
-    const [participantsMap, setParticipantsMap] = useState(new Map());
-    const [msg, setMsg] = useState("");
+    const [fetchChatDetails, {data: chatDetails, error: UserError}] =
+        useLazyQuery(QUERY_GET_USER);
 
     const [addNewMsg] = useMutation(MUTATION_UPDATE_MESSAGE, {
         /*refetchQueries: [
@@ -26,6 +32,12 @@ const ChatMessages = ({user, chatData}) => {
     });
 
     useEffect(() => {
+        if (selectedChatId && !chatData) {
+            fetchChatDetails({variables: {chatId: selectedChatId}})
+        }
+        if (chatDetails){
+            setChatData(chatDetails);
+        }
         if (chatContacts) {
             const tempContactMap = new Map();
             chatContacts.forEach((contact) => {
@@ -38,7 +50,7 @@ const ChatMessages = ({user, chatData}) => {
             setMessages(chat.messages);
         }
 
-    }, [chatData]);
+    }, [chatData, selectedChatId, chatContacts]);
 
     function createMessageObject(msg) {
         const timestamp = new Date().getTime();

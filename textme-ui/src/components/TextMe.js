@@ -10,7 +10,7 @@ import {useQuery} from "@apollo/client";
 const TextMe = () => {
     const queryParam = useQueryParams();
     const [userDetails, setUserDetails] = React.useState(null);
-    const [selectedChat, setSelectedChat] = React.useState({});
+    const [selectedChatId, setSelectedChatId] = React.useState({});
     const userId = queryParam.get("userId");
 
     const {data: landPage, loading, error} = useQuery(QUERY_GET_USER_SNAPSHOT, {variables: {getUserLandPage: userId}});
@@ -35,8 +35,8 @@ const TextMe = () => {
                 <div className="app">
                     <div className="app-body">
                         <Sidebar user={userDetails.user} chats={userDetails.chats} contacts={userDetails.contacts}
-                                 selectedChat={selectedChat} setSelectedChat={setSelectedChat}/>
-                        <ChatMessages user={userDetails.user} chatData={selectedChat}></ChatMessages>
+                                 selectedChatId={selectedChatId} setSelectedChatId={setSelectedChatId}/>
+                        <ChatMessages user={userDetails.user} selectedChatId={selectedChatId}></ChatMessages>
                     </div>
                 </div>
             }

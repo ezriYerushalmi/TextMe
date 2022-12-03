@@ -64,7 +64,7 @@ const typeDefs = gql`
     user(id: ID!): User
     getUserLandPage(userId: ID!): UserLandPageResponse
     searchUser(freeText: String): [User!]!
-    getUserChatMessages(chatId: ID!): Chat!
+    getChatDetails(chatId: ID!): Chat!
   }
 
   type Mutation {
