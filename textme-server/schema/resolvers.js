@@ -7,7 +7,8 @@ const {
     searchUser,
     createUser,
     getUserLandPage,
-    updateMsg
+    updateMsg,
+    getChatDetails
 } = require(`../modules/${process.env.STORE_TYPE}/queries`);
 const resolvers = {
     Query: {
@@ -25,7 +26,11 @@ const resolvers = {
         getUserLandPage: (_, args) => {
             const {userId} = args;
             return getUserLandPage(userId);
-        }
+        },
+        getChatDetils: (_, args) => {
+            const {userId, chatId} = args;
+            return getChatDetails(userId, chatId);
+        },
     },
 
     Mutation: {

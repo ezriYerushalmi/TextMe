@@ -4,7 +4,7 @@ import ChatInfo from "./ChatInfo";
 import {SearchOutlined} from "@ant-design/icons";
 import {Button} from "antd";
 
-const Sidebar = ({user, chats, contacts, setSelectedChat, selectedChat}) => {
+const Sidebar = ({user, chats, contacts, setSelectedChatId, selectedChatId}) => {
     console.log(chats);
     return (
         <div className="sidebar">
@@ -38,13 +38,8 @@ const Sidebar = ({user, chats, contacts, setSelectedChat, selectedChat}) => {
                         chatHeader.name = `${contact.name} ${contact.lastName}`;
                         chatHeader.imageUrl = contact.avatarImage;
                     }
-                    return <ChatInfo key={chat.id} chat={chat} chatDetails={chatHeader} selectedChat = {selectedChat} userID={user.id} customOnClick = {() => {
-                        setSelectedChat({
-                            id: chat.id,
-                            chatHeader,
-                            chat,
-                            chatContacts
-                        })
+                    return <ChatInfo key={chat.id} chat={chat} chatDetails={chatHeader} selectedChatId = {selectedChatId} userID={user.id} customOnClick = {() => {
+                        setSelectedChatId(chat.id)
                     }}/>
                 })}
 

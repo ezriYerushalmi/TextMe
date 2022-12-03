@@ -64,6 +64,15 @@ function getUserLandPage(userId) {
     return Promise.resolve({user, contacts, chats})
 }
 
+function getChatDetails(userId, chatId) {
+    const chat = chatsData.find(c => c.id === chatId);
+    const chatContacts = chat.chatMemberIds.map(cmId => usersList.find(usr => cmId === userId));
+if(chat)
+    const chatHeader = {
+        imageUrl:
+        },
+}
+
 function updateMsg(input){
     const message = new Message(input);
     messagesData.push(message);
