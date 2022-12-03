@@ -12,14 +12,14 @@ const {
 } = require(`../modules/${process.env.STORE_TYPE}/queries`);
 const resolvers = {
     Query: {
-        users:  () => {
+        users: () => {
             return getUsers();
         },
-        user:  (_, args) => {
+        user: (_, args) => {
             const {id} = args;
-            return  getUserById(id);
+            return getUserById(id);
         },
-        searchUser:  (_, args) => {
+        searchUser: (_, args) => {
             const {freeText} = args;
             return searchUser(freeText);
         },
@@ -27,7 +27,7 @@ const resolvers = {
             const {userId} = args;
             return getUserLandPage(userId);
         },
-        getChatDetils: (_, args) => {
+        getChatDetails: (_, args) => {
             const {userId, chatId} = args;
             return getChatDetails(userId, chatId);
         },

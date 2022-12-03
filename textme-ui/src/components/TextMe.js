@@ -10,7 +10,7 @@ import {useQuery} from "@apollo/client";
 const TextMe = () => {
     const queryParam = useQueryParams();
     const [userDetails, setUserDetails] = React.useState(null);
-    const [selectedChatId, setSelectedChatId] = React.useState({});
+    const [selectedChatId, setSelectedChatId] = React.useState(null);
     const userId = queryParam.get("userId");
 
     const {data: landPage, loading, error} = useQuery(QUERY_GET_USER_SNAPSHOT, {variables: {getUserLandPage: userId}});

@@ -3,14 +3,13 @@ import "./ChatMessages.css";
 
 import Message from "./Message";
 import UserAvatar from "./UserAvatar";
-import {useMutation} from "@apollo/client";
-import {MUTATION_UPDATE_MESSAGE} from "../gql/queries/users";
+import {useLazyQuery, useMutation} from "@apollo/client";
+import {MUTATION_UPDATE_MESSAGE, QUERY_GET_CHATS_DETAILS_BY_ID} from "../gql/queries/users";
 
 const ChatMessages = ({user, selectedChatId}) => {
 
-
     const [messages, setMessages] = useState(null);
-    const [chatData, setChatData] = useState(null);
+    const [chatData, setChatData] = useState({});
     const [participantsMap, setParticipantsMap] = useState(new Map());
     const [msg, setMsg] = useState("");
 
@@ -20,23 +19,25 @@ const ChatMessages = ({user, selectedChatId}) => {
         chatContacts
     } = chatData;
 
-    const [fetchChatDetails, {data: chatDetails, error: UserError}] =
-        useLazyQuery(QUERY_GET_USER);
-
-    const [addNewMsg] = useMutation(MUTATION_UPDATE_MESSAGE, {
-        /*refetchQueries: [
-            {
-                query: GET_USERS
-            }
-        ],*/
+    const [fetchChatDetails] =
+        useLazyQuery(QUERY_GET_CHATS_DETAILS_BY_ID, {
+        fetchPolicy: "no-cache"
     });
 
+    const [addNewMsg] = useMutation(MUTATION_UPDATE_MESSAGE, {});
+
     useEffect(() => {
-        if (selectedChatId && !chatData) {
-            fetchChatDetails({variables: {chatId: selectedChatId}})
-        }
-        if (chatDetails){
-            setChatData(chatDetails);
+        if (selectedChatId ) {
+            fetchChatDetails({
+                variables: {
+                    chatId: selectedChatId,
+                    getChatDetailsUserId: user.id
+                }
+            }).then((fetchResponse, error) => {
+                if(fetchResponse.data?.getChatDetails) {
+                    setChatData(fetchResponse.data.getChatDetails);
+                }
+            })
         }
         if (chatContacts) {
             const tempContactMap = new Map();
@@ -51,6 +52,7 @@ const ChatMessages = ({user, selectedChatId}) => {
         }
 
     }, [chatData, selectedChatId, chatContacts]);
+
 
     function createMessageObject(msg) {
         const timestamp = new Date().getTime();

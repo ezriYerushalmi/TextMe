@@ -1,5 +1,3 @@
-
-
 const {usersList} = require("./Data/Users");
 const {chatsData} = require("./Data/Chats");
 const {messagesData} = require("./Data/Messages");
@@ -55,7 +53,7 @@ function getUserLandPage(userId) {
     const contactIds = [];
     chats.forEach((chat) => {
         contactIds.push(chat.chatMemberIds);
-        chat.messages = messagesData.filter(msg =>  msg.chatId === chat.id);
+        chat.messages = messagesData.filter(msg => msg.chatId === chat.id);
     });
     const uniqueContactIds = [...new Set(contactIds.flat())];
     const uniqueContactIdsWithoutUser = removeItemFromArray(uniqueContactIds, userId)
@@ -66,14 +64,25 @@ function getUserLandPage(userId) {
 
 function getChatDetails(userId, chatId) {
     const chat = chatsData.find(c => c.id === chatId);
-    const chatContacts = chat.chatMemberIds.map(cmId => usersList.find(usr => cmId === userId));
-if(chat)
-    const chatHeader = {
-        imageUrl:
-        },
+    const chatContacts = chat.chatMemberIds.map(cmId => usersList.find(usr => cmId === usr.id));
+    chat.messages = messagesData.filter(msg => msg.chatId === chat.id);
+    let chatHeader = {
+        name: chat.name,
+        imageUrl: ''
+    }
+    if (chat.name === 'USER_NAME') {
+        const contact = chatContacts.find(usr => usr.id !== userId);
+        chatHeader.name = `${contact.name} ${contact.lastName}`;
+        chatHeader.imageUrl = contact.avatarImage;
+    }
+    return {
+        chat,
+        chatHeader,
+        chatContacts
+    }
 }
 
-function updateMsg(input){
+function updateMsg(input) {
     const message = new Message(input);
     messagesData.push(message);
     return Promise.resolve(message);
@@ -86,5 +95,6 @@ module.exports = {
     searchUser,
     createUser,
     getUserLandPage,
-    updateMsg
+    updateMsg,
+    getChatDetails
 };

@@ -1,4 +1,4 @@
-import { gql} from '@apollo/client';
+import {gql} from '@apollo/client';
 
 export const QUERY_ALL_USERS = gql`
     query GetAllUsers {
@@ -20,7 +20,6 @@ export const QUERY_GET_USER = gql`
         }
     }
 `;
-
 
 
 export const QUERY_GET_USER_SNAPSHOT = gql`
@@ -60,6 +59,40 @@ export const QUERY_GET_USER_SNAPSHOT = gql`
         }
     }
 `;
+
+
+export const QUERY_GET_CHATS_DETAILS_BY_ID = gql`
+    query GetChatDetails($chatId: ID!, $getChatDetailsUserId: ID!) {
+        getChatDetails(chatId: $chatId, userId: $getChatDetailsUserId) {
+            chat {
+                chatMemberIds
+                id
+                lastUpdatedDate
+                messages {
+                    writerId
+                    text
+                    sendDate
+                    id
+                    chatId
+                }
+                name
+            }
+            chatContacts {
+                id
+                name
+                lastName
+                phone
+                isConnected
+                lastSeen
+                avatarImage
+            }
+            chatHeader {
+                name
+                imageUrl
+            }
+        }
+    }
+`
 
 export const MUTATION_UPDATE_MESSAGE = gql`
     mutation UpdateMsg($updateMsgInput: UpdateMessageInput) {

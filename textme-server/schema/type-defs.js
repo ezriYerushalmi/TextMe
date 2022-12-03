@@ -40,6 +40,17 @@ const typeDefs = gql`
     contacts: [User]!
     chats: [Chat]!
   }
+  
+  type ChatHeader {
+    name: String!
+    imageUrl: String!
+  }
+  
+  type ChatDetailsById {
+    chat: Chat!
+    chatContacts: [User]!,
+    chatHeader: ChatHeader!
+  }
 
   ###################
   #   Input Types   #
@@ -64,7 +75,7 @@ const typeDefs = gql`
     user(id: ID!): User
     getUserLandPage(userId: ID!): UserLandPageResponse
     searchUser(freeText: String): [User!]!
-    getChatDetails(chatId: ID!): Chat!
+    getChatDetails(chatId: ID!, userId: ID!): ChatDetailsById!
   }
 
   type Mutation {

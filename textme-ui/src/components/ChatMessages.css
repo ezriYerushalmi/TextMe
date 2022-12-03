@@ -16,6 +16,7 @@
 .chat-header-info {
     flex: 1;
     margin-left: 20px;
+
 }
 
 
@@ -47,6 +48,9 @@
     font-family: Ubuntu, sans-serif !important;
 
 }
+
+
+
 
 .chat-write-message {
     display: flex;
