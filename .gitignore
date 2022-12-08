@@ -1,2 +1,12 @@
 
+textme-server/.idea/
+textme-server/node_modules/
+
+textme-ui/.idea/
+textme-ui/node_modules/
+textme-ui/.idea/workspace.xml
 textme-server/.idea/workspace.xml
+.idea/vcs.xml
+.idea/TextMe.iml
+.idea/modules.xml
+textme-ui/.idea/workspace.xml
